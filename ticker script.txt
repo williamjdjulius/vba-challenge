@@ -1,0 +1,72 @@
+Sub Stock_data()
+
+Dim ws As Worksheet
+
+Dim ticker As String
+Dim vol As Double
+
+
+Dim Year_open As Double
+Dim year_close As Double
+
+Dim yearly_change As Double
+Dim percent_change As Double
+Dim summary_table_row As Integer
+
+
+Cells(1, 9).Value = "ticker"
+Cells(1, 10).Value = "yearly change"
+Cells(1, 11).Value = "percent change"
+Cells(1, 12).Value = "total stock volume"
+
+
+
+tickcount = 2
+
+j = 2
+
+For i = 2 To 75301
+If Cells(i + 1, 1).Value <> Cells(i, 1).Value Then
+
+Cells(tickcount, 9) = Cells(i, 1).Value
+
+Cells(tickcount, 10).Value = Cells(i, 6) - Cells(j, 3).Value
+
+If Cells(tickcount, 10).Value < 0 Then
+
+Cells(tickcount, 10).Interior.ColorIndex = 3
+
+Else
+
+Cells(tickcount, 10).Interior.ColorIndex = 4
+
+
+
+End If
+ 
+ If Cells(j, 3).Value <> 0 Then
+ percent_change = ((Cells(i, 6).Value - Cells(j, 3).Value / Cells(j, 3).Value))
+ 
+ Cells(tickcount, 11).Value = Format(percent_change, "Percent")
+ 
+ Else
+ 
+ Cells(tickcount, 11).Value = Format(0, "percent")
+ 
+ 
+ 
+ End If
+ 
+ Cells(tickcount, 12).Value = WorksheetFunction.Sum(Range(Cells(j, 7), Cells(i, 7)))
+ 
+ tickcount = tickcount + 1
+ 
+ j = i + 1
+ 
+ End If
+ 
+ Next i
+
+
+
+End Sub
